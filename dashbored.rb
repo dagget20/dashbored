@@ -49,10 +49,14 @@ end
 
 get "/user_recent_media" do
   client = Instagram.client(:access_token => session[:access_token])
-  user = client.user
+  @user = client.user
   html = "<h1>#{user.username}'s recent media</h1>"
-  for media_item in client.user_recent_media(:count => 10)
+  for media_item in client.user_recent_media(:count => 60)
     html << "<div style='float:left;'><img src='#{media_item.images.thumbnail.url}'><br/> <a href='/media_like/#{media_item.id}'>Like</a>  <a href='/media_unlike/#{media_item.id}'>Un-Like</a>  <br/>LikesCount=#{media_item.likes[:count]} CommentsCount=#{media_item.comments[:count]}</div>"
   end
   html
+end
+
+post "/user_recent_media" do
+
 end
